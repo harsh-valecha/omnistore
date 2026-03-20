@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Catalog Dashboard{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Catalog Dashboard</h1>
+    <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">All Products</a>
+    <a href="{% url 'catalog:category_list' %}" class="btn btn-secondary">Categories</a>
+
+    <h3 class="mt-4">Recent Products</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Status</th>
+                <th>Base Price</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a></td>
+                <td>{{ product.slug }}</td>
+                <td>{{ product.status }}</td>
+                <td>${{ product.base_price }}</td>
+                <td>{{ product.category|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No products yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Products</h1>
+    <form method="get" class="mb-3">
+        <input type="text" name="q" placeholder="Search by name, slug, or SKU..." value="{{ query }}" class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Status</th>
+                <th>Base Price</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a></td>
+                <td>{{ product.slug }}</td>
+                <td>{{ product.status }}</td>
+                <td>${{ product.base_price }}</td>
+                <td>{{ product.category|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No products found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>{{ product.name }}</h1>
+    <p><strong>Slug:</strong> {{ product.slug }}</p>
+    <p><strong>Status:</strong> {{ product.status }}</p>
+    <p><strong>Base Price:</strong> ${{ product.base_price }}</p>
+    <p><strong>Category:</strong> {{ product.category|default:"-" }}</p>
+    <p><strong>Description:</strong> {{ product.description|default:"No description" }}</p>
+
+    <h3>Variants</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Size</th>
+                <th>Color</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for variant in variants %}
+            <tr>
+                <td>{{ variant.sku }}</td>
+                <td>{{ variant.size|default:"-" }}</td>
+                <td>{{ variant.color|default:"-" }}</td>
+                <td>${{ variant.price }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No variants.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Discount {{ discount.code }}{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Discount: {{ discount.code }}</h1>
+    <p><strong>Type:</strong> {{ discount.discount_type }}</p>
+    <p><strong>Value:</strong> {{ discount.value }}</p>
+    <p><strong>Active:</strong> {{ discount.is_active|yesno:"Yes,No" }}</p>
+    <p><strong>Valid:</strong> {{ discount.active_from|date:"Y-m-d" }} to {{ discount.active_until|date:"Y-m-d" }}</p>
+    <p><strong>Usage:</strong> {{ discount.usage_count }}{% if discount.usage_limit %} / {{ discount.usage_limit }}{% endif %}</p>
+
+    <h3>Rules</h3>
+    <ul>
+        {% for rule in rules %}
+        <li>
+            {% if rule.min_order_value %}Min Order: ${{ rule.min_order_value }}{% endif %}
+            {% if rule.limit_per_user %}Limit Per User: {{ rule.limit_per_user }}{% endif %}
+            {% if rule.category %}Category: {{ rule.category.name }}{% endif %}
+        </li>
+        {% empty %}
+        <li>No rules defined.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

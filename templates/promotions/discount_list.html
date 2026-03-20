@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Discounts{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Discounts</h1>
+    <form method="get" class="mb-3">
+        <input type="text" name="q" placeholder="Search by code..." value="{{ query }}" class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Value</th>
+                <th>Active</th>
+                <th>Valid Until</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for discount in discounts %}
+            <tr>
+                <td><a href="{% url 'promotions:discount_detail' discount.pk %}">{{ discount.code }}</a></td>
+                <td>{{ discount.discount_type }}</td>
+                <td>{{ discount.value }}</td>
+                <td>{{ discount.is_active|yesno:"Yes,No" }}</td>
+                <td>{{ discount.active_until|date:"Y-m-d" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No discounts found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

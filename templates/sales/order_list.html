@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Orders</h1>
+    <form method="get" class="mb-3">
+        <input type="text" name="q" placeholder="Search by order ID or email..." value="{{ query }}" class="form-control mb-2">
+        <select name="status" class="form-control mb-2">
+            <option value="">All Statuses</option>
+            <option value="pending" {% if status == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="confirmed" {% if status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+            <option value="paid" {% if status == 'paid' %}selected{% endif %}>Paid</option>
+            <option value="shipped" {% if status == 'shipped' %}selected{% endif %}>Shipped</option>
+            <option value="delivered" {% if status == 'delivered' %}selected{% endif %}>Delivered</option>
+            <option value="cancelled" {% if status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+            <option value="refunded" {% if status == 'refunded' %}selected{% endif %}>Refunded</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Email</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td><a href="{% url 'sales:order_detail' order.pk %}">{{ order.order_id }}</a></td>
+                <td>{{ order.customer_email }}</td>
+                <td>${{ order.total_price }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.created_at|date:"Y-m-d" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No orders found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

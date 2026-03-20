@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Identity Dashboard{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Identity Dashboard</h1>
+    <p>Welcome, {{ user.username }}!</p>
+    <p>Role: {{ user.role }}</p>
+    <a href="{% url 'identity:user_list' %}" class="btn btn-primary">Manage Users</a>
+</div>
+{% endblock %}

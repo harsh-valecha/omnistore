@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales Dashboard{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>Sales Dashboard</h1>
+    <a href="{% url 'sales:order_list' %}" class="btn btn-primary">All Orders</a>
+
+    <h3 class="mt-4">Recent Orders</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Email</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in recent_orders %}
+            <tr>
+                <td><a href="{% url 'sales:order_detail' order.pk %}">{{ order.order_id }}</a></td>
+                <td>{{ order.customer_email }}</td>
+                <td>${{ order.total_price }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.created_at|date:"Y-m-d" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No orders yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

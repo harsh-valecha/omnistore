@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - OmniStore{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h1>OmniStore Admin Dashboard</h1>
+    <p>Welcome to the OmniStore Admin & Engine.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Catalog</h5>
+                    <p class="card-text">Manage products, variants, categories, and inventory.</p>
+                    <a href="{% url 'catalog:dashboard' %}" class="btn btn-primary">Go to Catalog</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sales</h5>
+                    <p class="card-text">View and manage orders, shipments, and status history.</p>
+                    <a href="{% url 'sales:dashboard' %}" class="btn btn-primary">Go to Sales</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Promotions</h5>
+                    <p class="card-text">Create and manage discounts and promotional rules.</p>
+                    <a href="{% url 'promotions:dashboard' %}" class="btn btn-primary">Go to Promotions</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <p class="card-text">Manage user accounts and permissions.</p>
+                    <a href="{% url 'identity:user_list' %}" class="btn btn-primary">Go to Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
