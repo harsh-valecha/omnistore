@@ -278,6 +278,8 @@ omnistore/
 - **Auth:** Django built-in with custom User model
 
 ---
+## Dummy data details - 
+for all the users except admin have password as 'password123'
 
 ## Support
 
