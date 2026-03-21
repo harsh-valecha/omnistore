@@ -8,6 +8,7 @@
     <p>Welcome to the OmniStore Admin & Engine.</p>
 
     <div class="row mt-4">
+        {% if user.is_admin or user.is_manager or user.is_staff_member %}
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
@@ -17,6 +18,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        {% if user.is_admin or user.is_manager %}
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
@@ -26,6 +30,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        {% if user.is_admin or user.is_manager or user.is_staff_member %}
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
@@ -35,6 +42,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        {% if user.is_admin or user.is_manager %}
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
@@ -44,6 +54,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

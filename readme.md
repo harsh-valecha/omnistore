@@ -23,10 +23,18 @@ Open http://127.0.0.1:8000 in your browser.
 ### 3. Dashboard
 
 After login, you'll see the main dashboard with navigation cards for each module:
-- **Catalog** - Products, Variants, Categories, Inventory
-- **Sales** - Orders, Status Management
-- **Promotions** - Discounts & Coupons
-- **Users** - User Management
+- **Catalog** - Products, Variants, Categories, Inventory (visible to Admin, Manager, Staff)
+- **Sales** - Orders, Status Management (visible to Admin, Manager, Staff)
+- **Promotions** - Discounts & Coupons (visible to Admin, Manager, Staff)
+- **Users** - User Management (visible to Admin, Manager only)
+
+### 4. Store (Product Browsing)
+
+All authenticated users can access the store to browse and buy products:
+- **URL:** `/catalog/store/`
+- Search products by name or description
+- Filter by category
+- View product details with variants and pricing
 
 ---
 
@@ -137,11 +145,25 @@ Manage users and role-based access control.
 
 #### User Roles:
 
-| Role | Permissions |
-|------|-------------|
-| **Admin** | Full access to all modules including `/admin/` |
-| **Manager** | Catalog and Promotions modules only |
-| **Staff** | Sales module only |
+| Role | Dashboard Access | Users Tab |
+|------|------------------|-----------|
+| **Admin** | All modules (Catalog, Sales, Promotions, Users) | Yes |
+| **Manager** | Catalog, Sales, Promotions | Yes |
+| **Staff** | Catalog, Sales, Promotions | No |
+
+> **Note:** The "Store" link in the sidebar is visible to ALL authenticated users - anyone can browse and purchase products.
+
+#### Sidebar Navigation:
+
+```
+OmniStore
+├── Dashboard      (All authenticated users)
+├── Store          (All authenticated users - product browsing)
+├── Catalog        (Admin, Manager, Staff)
+├── Sales          (Admin, Manager, Staff)
+├── Promotions     (Admin, Manager, Staff)
+└── Users          (Admin, Manager only)
+```
 
 #### Custom Permissions:
 - `view_all_orders` - See all orders regardless of status
@@ -152,7 +174,7 @@ Manage users and role-based access control.
 - `/identity/login/` - User login
 - `/identity/logout/` - User logout
 - `/identity/dashboard/` - Current user info
-- `/identity/users/` - User management (admin only)
+- `/identity/users/` - User list (Admin and Manager only)
 
 ---
 
@@ -193,6 +215,7 @@ Access to:
 | Catalog | `/catalog/products/` | GET | Product list |
 | Catalog | `/catalog/products/<id>/` | GET | Product detail |
 | Catalog | `/catalog/categories/` | GET | Category list |
+| Catalog | `/catalog/store/` | GET | Store (product browsing for all users) |
 | Sales | `/sales/dashboard/` | GET | Dashboard |
 | Sales | `/sales/orders/` | GET | Order list |
 | Sales | `/sales/orders/<id>/` | GET | Order detail |
@@ -278,8 +301,16 @@ omnistore/
 - **Auth:** Django built-in with custom User model
 
 ---
-## Dummy data details - 
+## Dummy data details -
 for all the users except admin have password as 'password123'
+
+## Recent Changes
+
+### RBAC Bug Fix (March 2026)
+Fixed role-based access control where user role properties (`is_admin`, `is_manager`, `is_staff_member`) were methods instead of properties. This caused incorrect visibility of UI elements like the Users tab.
+
+### Store Feature Added
+All authenticated users can now browse products via `/catalog/store/` - the store link is visible in the sidebar for everyone regardless of role.
 
 ## Support
 

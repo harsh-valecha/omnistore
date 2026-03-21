@@ -55,3 +55,27 @@ def category_list(request):
     """List all categories"""
     categories = Category.objects.filter(parent__isnull=True).prefetch_related('children')
     return render(request, 'catalog/category_list.html', {'categories': categories})
+
+
+@login_required
+def store(request):
+    """Product browsing view for all users"""
+    query = request.GET.get('q', '')
+    category_id = request.GET.get('category', '')
+
+    products = Product.objects.filter(status=Product.Status.LIVE)
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query)
+        ).distinct()
+    if category_id:
+        products = products.filter(category_id=category_id)
+
+    categories = Category.objects.all()
+    context = {
+        'products': products,
+        'categories': categories,
+        'query': query,
+    }
+    return render(request, 'catalog/store.html', context)

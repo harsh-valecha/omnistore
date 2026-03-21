@@ -20,11 +20,14 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    @property
     def is_admin(self):
         return self.role == self.Role.ADMIN
 
+    @property
     def is_manager(self):
         return self.role == self.Role.MANAGER
 
+    @property
     def is_staff_member(self):
         return self.role == self.Role.STAFF

@@ -19,16 +19,17 @@
                 <h4 class="p-3">OmniStore</h4>
                 <ul class="nav flex-column">
                     <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
-                    {% if perms.catalog.view_product %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'catalog:store' %}">Store</a></li>
+                    {% if user.is_admin or user.is_manager or user.is_staff_member %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'catalog:dashboard' %}">Catalog</a></li>
                     {% endif %}
-                    {% if perms.sales.view_order %}
+                    {% if user.is_admin or user.is_manager %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'sales:dashboard' %}">Sales</a></li>
                     {% endif %}
-                    {% if perms.promotions.view_discount %}
+                    {% if user.is_admin or user.is_manager or user.is_staff_member %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'promotions:dashboard' %}">Promotions</a></li>
                     {% endif %}
-                    {% if perms.identity.view_user %}
+                    {% if user.is_admin or user.is_manager %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'identity:user_list' %}">Users</a></li>
                     {% endif %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'identity:logout' %}">Logout</a></li>
